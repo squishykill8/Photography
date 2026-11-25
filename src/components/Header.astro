@@ -5,10 +5,10 @@ interface Props { overlay?: boolean }
 const { overlay = false } = Astro.props;
 const s = await getSettings();
 const galleries = await getGalleries();
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/';
 const links = [
-  ...galleries.map((g) => ({ href: `/${g.id}`, label: g.data.title })),
-  { href: '/contact', label: 'Contact' },
+  ...galleries.map((g) => ({ href: `/${g.id}/`, label: g.data.title })),
+  { href: '/contact/', label: 'Contact' },
 ];
 ---
 

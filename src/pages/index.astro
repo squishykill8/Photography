@@ -34,7 +34,7 @@ const galleries = (await getGalleries()).filter((g) => g.data.showOnHome);
     <div class="cards">
       {
         galleries.map((g, i) => (
-          <a class="card" href={`/${g.id}`}>
+          <a class="card" href={`/${g.id}/`}>
             <Image
               src={g.data.cover}
               alt={g.data.coverAlt}

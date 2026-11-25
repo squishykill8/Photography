@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
       {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
       {s.instagram && <a href={s.instagram} target="_blank" rel="noopener">Instagram</a>}
       {s.facebook && <a href={s.facebook} target="_blank" rel="noopener">Facebook</a>}
-      <a href="/contact">Contact</a>
+      <a href="/contact/">Contact</a>
     </div>
     <p class="fine">© {year} {s.siteName}{s.footerText && <> · {s.footerText}</>}</p>
   </div>

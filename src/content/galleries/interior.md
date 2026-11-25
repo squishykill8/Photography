@@ -20,9 +20,6 @@ photos:
   - image: ../../assets/uploads/dz2_2608.jpg
     alt: Interior photo 5
     caption: ""
-  - image: ../../assets/uploads/sample-interior-6.jpg
-    alt: Interior photo 6
-    caption: ""
 ---
 
 Architectural and interior photography for designers, architects, and hospitality brands, with natural light and honest color.

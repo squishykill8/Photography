@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME # <- change this after creating the GitHub repo (see README)
+  repo: squishykill8/Photography
   branch: main
 
 # Lets you use the admin panel on your own computer without logging in.

@@ -1,0 +1,40 @@
+---
+import { getContact, getSettings } from '../lib/content';
+const s = await getSettings();
+const c = await getContact();
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container inner">
+    <a class="logo" href="/">{s.siteName}</a>
+    <div class="links">
+      {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
+      {s.instagram && <a href={s.instagram} target="_blank" rel="noopener">Instagram</a>}
+      {s.facebook && <a href={s.facebook} target="_blank" rel="noopener">Facebook</a>}
+      <a href="/contact">Contact</a>
+    </div>
+    <p class="fine">© {year} {s.siteName}{s.footerText && <> · {s.footerText}</>}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding-block: 3rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+  .inner { display: grid; gap: 1.25rem; justify-items: center; }
+  .logo { font-family: var(--font-heading), serif; font-size: 1.4rem; text-decoration: none; }
+  .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+  .links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .links a:hover { color: var(--accent); }
+  .fine { margin: 0; font-size: 0.8rem; color: var(--muted); }
+</style>

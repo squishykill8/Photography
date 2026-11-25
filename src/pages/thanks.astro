@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { getContact } from '../lib/content';
+const c = await getContact();
+---
+
+<Base title="Thank you">
+  <section class="section narrow thanks">
+    <h1>Message sent</h1>
+    <p>{c.thanksMessage}</p>
+    <a class="btn" href="/">Back to the portfolio</a>
+  </section>
+</Base>
+
+<style>
+  .thanks { text-align: center; min-height: 55vh; display: grid; place-content: center; gap: 1rem; justify-items: center; }
+  p { color: var(--muted); }
+</style>

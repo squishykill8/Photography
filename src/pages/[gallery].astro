@@ -1,0 +1,45 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+import { getGalleries } from '../lib/content';
+
+// One page per gallery file in src/content/galleries (e.g. /landscape, /wedding).
+export async function getStaticPaths() {
+  const galleries = await getGalleries();
+  return galleries.map((g) => ({ params: { gallery: g.id }, props: { g } }));
+}
+
+const { g } = Astro.props;
+const { Content } = await render(g);
+const plain = g.body?.replace(/\s+/g, ' ').trim().slice(0, 160);
+---
+
+<Base title={g.data.title} description={plain} ogImage={g.data.cover}>
+  <header class="intro narrow">
+    <p class="eyebrow">Portfolio</p>
+    <h1>{g.data.title}</h1>
+    <div class="text"><Content /></div>
+  </header>
+  <section class="container gallery">
+    {
+      g.data.photos.length ? (
+        <GalleryGrid photos={g.data.photos} id={g.id} />
+      ) : (
+        <p class="empty">Photos coming soon.</p>
+      )
+    }
+  </section>
+  <div class="cta narrow">
+    <h2>Interested in a {g.data.title.toLowerCase()} session?</h2>
+    <a class="btn" href="/contact">Get in touch</a>
+  </div>
+</Base>
+
+<style>
+  .intro { text-align: center; padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem); }
+  .text { color: var(--muted); font-size: 1.05rem; }
+  .gallery { padding-bottom: 2rem; }
+  .empty { text-align: center; color: var(--muted); }
+  .cta { text-align: center; padding-block: clamp(3rem, 7vw, 5rem); }
+</style>

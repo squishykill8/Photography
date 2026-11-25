@@ -1,0 +1,12 @@
+{
+  "heading": "About & Contact",
+  "headshot": "../../assets/uploads/sample-headshot.jpg",
+  "headshotAlt": "Portrait of the photographer",
+  "bio": "Hi, I'm Your Name, a photographer based in Your City. I've spent the last several years photographing landscapes, interiors, portraits, and weddings, chasing good light wherever it leads.\n\nI keep my approach calm and unposed so the photos feel like you. Whether it's your wedding day, a new space, or a print for your wall, I'd love to hear what you have in mind.",
+  "email": "hello@example.com",
+  "phone": "",
+  "location": "Your City, State",
+  "formHeading": "Tell me about your project",
+  "inquiryTypes": ["Wedding", "Portrait", "Interior", "Landscape print", "Other"],
+  "thanksMessage": "Thank you for reaching out! I'll get back to you within two business days."
+}

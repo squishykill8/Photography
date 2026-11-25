@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { getContact } from '../lib/content';
+
+const c = await getContact();
+const paragraphs = c.bio.split(/\n\s*\n/);
+---
+
+<Base title="Contact" description={paragraphs[0]} ogImage={c.headshot}>
+  <section class="section container about">
+    <div class="photo">
+      <Image src={c.headshot} alt={c.headshotAlt} widths={[500, 800, 1100]} sizes="(max-width: 860px) 100vw, 40vw" loading="eager" layout="none" />
+    </div>
+    <div class="bio">
+      <p class="eyebrow">About</p>
+      <h1>{c.heading}</h1>
+      {paragraphs.map((p) => <p>{p}</p>)}
+      <ul class="details">
+        {c.email && <li><span>Email</span><a href={`mailto:${c.email}`}>{c.email}</a></li>}
+        {c.phone && <li><span>Phone</span><a href={`tel:${c.phone.replace(/[^+\d]/g, '')}`}>{c.phone}</a></li>}
+        {c.location && <li><span>Based in</span>{c.location}</li>}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section form-wrap">
+    <div class="narrow">
+      <h2 class="section-title">{c.formHeading}</h2>
+      <!-- Netlify detects this form automatically when the site is deployed and emails you each submission. -->
+      <form name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="visually-hidden">
+          <label>Leave this empty: <input name="company" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <div class="row">
+          <label>Name<input name="name" autocomplete="name" required /></label>
+          <label>Email<input type="email" name="email" autocomplete="email" required /></label>
+        </div>
+        <div class="row">
+          <label>
+            I'm interested in
+            <select name="inquiry" required>
+              <option value="" disabled selected>Choose one</option>
+              {c.inquiryTypes.map((t) => <option>{t}</option>)}
+            </select>
+          </label>
+          <label>Event or session date <small>(optional)</small><input type="date" name="date" /></label>
+        </div>
+        <label>Message<textarea name="message" rows="6" required></textarea></label>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: center;
+  }
+  .photo :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .bio p { margin: 0 0 1.1em; }
+  .details { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 0.6rem; }
+  .details li { display: flex; gap: 1rem; }
+  .details span {
+    min-width: 6.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.25rem;
+  }
+  .details a { text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  .form-wrap { background: var(--bg-alt); }
+  form { display: grid; gap: 1.25rem; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  label {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  small { text-transform: none; letter-spacing: 0; }
+  input,
+  select,
+  textarea {
+    font: inherit;
+    font-size: 1rem;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 0;
+    padding: 0.8rem 0.9rem;
+    width: 100%;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus { outline: none; border-color: var(--accent); }
+  form .btn { justify-self: center; margin-top: 0.5rem; }
+
+  @media (max-width: 860px) {
+    .about, .row { grid-template-columns: 1fr; }
+  }
+</style>

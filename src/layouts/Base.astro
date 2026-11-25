@@ -1,0 +1,67 @@
+---
+import '../styles/theme.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getSettings } from '../lib/content';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: ImageMetadata;
+  /** Header floats over a full-width banner (home page). */
+  overlayHeader?: boolean;
+}
+
+const { title, description, ogImage, overlayHeader = false } = Astro.props;
+const s = await getSettings();
+const pageTitle = title ? `${title} | ${s.siteName}` : s.siteName;
+const desc = description ?? s.tagline ?? s.siteName;
+const og = ogImage ? await getImage({ src: ogImage, width: 1200, format: 'jpg' }) : null;
+const ogUrl = og ? new URL(og.src, Astro.site ?? Astro.url).href : null;
+
+const fonts = [...new Set([s.headingFont, s.bodyFont])]
+  .map((f) => `family=${f.replace(/ /g, '+')}:ital,wght@0,300;0,400;0,500;1,300;1,400`)
+  .join('&');
+const fontsHref = `https://fonts.googleapis.com/css2?${fonts}&display=swap`;
+---
+
+<!doctype html>
+<html lang="en" data-theme={s.theme} data-default-theme={s.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? Astro.url).href} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    {ogUrl && <meta property="og:image" content={ogUrl} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontsHref} />
+    <style
+      set:html={`:root{--accent:${s.accentColor};--font-heading:'${s.headingFont}';--font-body:'${s.bodyFont}';}`}
+    ></style>
+    {
+      s.showThemeToggle && (
+        <script is:inline>
+          try {
+            const t = localStorage.getItem('theme');
+            if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+          } catch {}
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Skip to content</a>
+    <Header overlay={overlayHeader} />
+    <main id="main"><slot /></main>
+    <Footer />
+  </body>
+</html>

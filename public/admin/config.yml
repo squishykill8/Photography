@@ -1,0 +1,129 @@
+# Decap CMS configuration: defines what you can edit at yoursite.com/admin
+# Docs: https://decapcms.org/docs/configuration-options/
+
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME # <- change this after creating the GitHub repo (see README)
+  branch: main
+
+# Lets you use the admin panel on your own computer without logging in.
+# Run `npm run cms` and `npm run dev`, then open http://localhost:4321/admin/
+local_backend: true
+
+site_url: https://example.netlify.app
+display_url: https://example.netlify.app
+logo_url: /favicon.svg
+
+# Where uploaded photos are stored. Paths are saved relative to each content
+# file so the site can resize and optimize every photo automatically.
+media_folder: src/assets/uploads
+public_folder: /src/assets/uploads
+
+collections:
+  - name: galleries
+    label: Galleries
+    label_singular: Gallery
+    description: >
+      One gallery per type of photography. Each gallery gets its own page and
+      appears in the menu, ordered by "Menu order". Don't name a gallery "Contact" or "Thanks".
+    folder: src/content/galleries
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: title
+    media_folder: ../../assets/uploads
+    public_folder: ../../assets/uploads
+    editor: { preview: false }
+    summary: "{{order}}. {{title}}"
+    sortable_fields: [order, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Menu order, name: order, widget: number, value_type: int, default: 10, hint: "Lower numbers appear first in the menu and on the home page." }
+      - { label: Show on home page, name: showOnHome, widget: boolean, default: true }
+      - { label: Cover photo, name: cover, widget: image, hint: "Used for the large preview on the home page." }
+      - { label: Cover photo description, name: coverAlt, widget: string, required: false, hint: "Describe the photo for screen readers and search engines." }
+      - label: Photos
+        name: photos
+        widget: list
+        summary: "{{fields.alt}}"
+        hint: "Drag to reorder. Photos appear left to right in this order."
+        fields:
+          - { label: Photo, name: image, widget: image }
+          - { label: Description (alt text), name: alt, widget: string, required: false }
+          - { label: Caption, name: caption, widget: string, required: false, hint: "Optional. Shown on hover and in the fullscreen viewer." }
+      - { label: Intro text, name: body, widget: markdown, required: false, buttons: [bold, italic, link] }
+
+  - name: pages
+    label: Pages
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: home
+        label: Home page
+        file: src/content/home/home.json
+        media_folder: ../../assets/uploads
+        public_folder: ../../assets/uploads
+        fields:
+          - { label: Banner photo, name: bannerImage, widget: image }
+          - { label: Banner photo description, name: bannerAlt, widget: string, required: false }
+          - { label: Headline, name: headline, widget: string }
+          - { label: Sub-headline, name: subheadline, widget: string, required: false }
+          - { label: Banner button text, name: buttonText, widget: string, required: false, hint: "Leave empty to hide the button." }
+          - { label: Portfolio section heading, name: galleriesHeading, widget: string, default: Portfolio }
+          - { label: Featured section heading, name: featuredHeading, widget: string, default: Selected Work }
+          - label: Featured photos
+            name: featured
+            widget: list
+            summary: "{{fields.alt}}"
+            hint: "A hand-picked set of your best work, shown below the galleries. Drag to reorder."
+            fields:
+              - { label: Photo, name: image, widget: image }
+              - { label: Description (alt text), name: alt, widget: string, required: false }
+
+      - name: contact
+        label: About & Contact page
+        file: src/content/contact/contact.json
+        media_folder: ../../assets/uploads
+        public_folder: ../../assets/uploads
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Your photo, name: headshot, widget: image }
+          - { label: Photo description, name: headshotAlt, widget: string, required: false }
+          - { label: Bio, name: bio, widget: text, hint: "Leave a blank line between paragraphs." }
+          - { label: Email, name: email, widget: string, required: false }
+          - { label: Phone, name: phone, widget: string, required: false }
+          - { label: Location, name: location, widget: string, required: false }
+          - { label: Form heading, name: formHeading, widget: string }
+          - { label: Inquiry types, name: inquiryTypes, widget: list, hint: "Choices in the form's \"I'm interested in\" dropdown." }
+          - { label: Message after sending, name: thanksMessage, widget: text }
+
+  - name: settings
+    label: Site Settings
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: site
+        label: Look & feel, name, social links
+        file: src/content/settings/site.json
+        fields:
+          - { label: Site name, name: siteName, widget: string, hint: "Shown in the top-left logo, browser tab and footer." }
+          - { label: Tagline, name: tagline, widget: string, required: false }
+          - label: Theme
+            name: theme
+            widget: select
+            options:
+              - { label: "Light: white background", value: light }
+              - { label: "Dark: black gallery background", value: dark }
+          - { label: Show light/dark toggle to visitors, name: showThemeToggle, widget: boolean, default: true }
+          - { label: Accent color, name: accentColor, widget: color, hint: "Used for links, underlines and button hovers." }
+          - label: Heading font
+            name: headingFont
+            widget: select
+            options: [Cormorant Garamond, Playfair Display, Lora, Libre Baskerville, Italiana, Bodoni Moda, Josefin Sans, Montserrat, Jost]
+          - label: Body font
+            name: bodyFont
+            widget: select
+            options: [Jost, Inter, Montserrat, Lato, Raleway, Nunito Sans, Work Sans, Lora, EB Garamond]
+          - { label: Instagram URL, name: instagram, widget: string, required: false }
+          - { label: Facebook URL, name: facebook, widget: string, required: false }
+          - { label: Footer text, name: footerText, widget: string, required: false }

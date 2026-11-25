@@ -1,6 +1,6 @@
 ---
 title: Landscape
-order: 1
+order: 5
 showOnHome: true
 cover: ../../assets/uploads/sample-landscape-1.jpg
 coverAlt: Landscape cover photo

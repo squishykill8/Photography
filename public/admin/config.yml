@@ -10,8 +10,8 @@ backend:
 # Run `npm run cms` and `npm run dev`, then open http://localhost:4321/admin/
 local_backend: true
 
-site_url: https://example.netlify.app
-display_url: https://example.netlify.app
+site_url: https://squishykill8-photography.netlify.app
+display_url: https://squishykill8-photography.netlify.app
 logo_url: /favicon.svg
 
 # Where uploaded photos are stored. Paths are saved relative to each content

@@ -15,6 +15,7 @@
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "decap-server": "^3.11.6"
+    "decap-server": "^3.11.6",
+    "netlify-cli": "^27.20.1"
   }
 }

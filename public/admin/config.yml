@@ -1,23 +1,19 @@
-# Decap CMS configuration: defines what you can edit at yoursite.com/admin
-# Docs: https://decapcms.org/docs/configuration-options/
+# Admin panel (Sveltia CMS) configuration: defines what you can edit at yoursite.com/admin
+# Docs: https://sveltiacms.app/docs
 
 backend:
   name: github
   repo: squishykill8/Photography
   branch: main
 
-# Lets you use the admin panel on your own computer without logging in.
-# Run `npm run cms` and `npm run dev`, then open http://localhost:4321/admin/
-local_backend: true
-
 site_url: https://dzung-photography.netlify.app
 display_url: https://dzung-photography.netlify.app
 logo_url: /favicon.svg
 
-# Where uploaded photos are stored. Paths are saved relative to each content
-# file so the site can resize and optimize every photo automatically.
+# Where uploaded photos are stored. They're saved as "@uploads/name.jpg", which the
+# site resolves to src/assets/uploads so every photo is resized and optimized.
 media_folder: src/assets/uploads
-public_folder: /src/assets/uploads
+public_folder: "@uploads"
 
 collections:
   - name: galleries
@@ -31,8 +27,6 @@ collections:
     delete: true
     slug: "{{slug}}"
     identifier_field: title
-    media_folder: ../../assets/uploads
-    public_folder: ../../assets/uploads
     editor: { preview: false }
     summary: "{{order}}. {{title}}"
     sortable_fields: [order, title]
@@ -44,13 +38,21 @@ collections:
       - { label: Cover photo description, name: coverAlt, widget: string, required: false, hint: "Describe the photo for screen readers and search engines." }
       - label: Photos
         name: photos
+        widget: image
+        multiple: true
+        required: false
+        hint: "Select or drag in as many photos as you like, then drag the handles to reorder. Photos appear left to right in this order."
+      - label: Photo descriptions & captions (optional)
+        name: photoDetails
         widget: list
-        summary: "{{fields.alt}}"
-        hint: "Drag to reorder. Photos appear left to right in this order."
+        required: false
+        collapsed: true
+        summary: "{{fields.caption}}"
+        hint: "Only needed for photos you want a caption on, or a custom description for search engines and screen readers."
         fields:
-          - { label: Photo, name: image, widget: image }
+          - { label: Photo, name: image, widget: image, hint: "Pick the same photo from the Photos list above." }
           - { label: Description (alt text), name: alt, widget: string, required: false }
-          - { label: Caption, name: caption, widget: string, required: false, hint: "Optional. Shown on hover and in the fullscreen viewer." }
+          - { label: Caption, name: caption, widget: string, required: false, hint: "Shown on hover and in the fullscreen viewer." }
       - { label: Intro text, name: body, widget: markdown, required: false, buttons: [bold, italic, link] }
 
   - name: pages
@@ -61,8 +63,6 @@ collections:
       - name: home
         label: Home page
         file: src/content/home/home.json
-        media_folder: ../../assets/uploads
-        public_folder: ../../assets/uploads
         fields:
           - { label: Banner photo, name: bannerImage, widget: image }
           - { label: Banner photo description, name: bannerAlt, widget: string, required: false }
@@ -73,18 +73,14 @@ collections:
           - { label: Featured section heading, name: featuredHeading, widget: string, default: Selected Work }
           - label: Featured photos
             name: featured
-            widget: list
-            summary: "{{fields.alt}}"
-            hint: "A hand-picked set of your best work, shown below the galleries. Drag to reorder."
-            fields:
-              - { label: Photo, name: image, widget: image }
-              - { label: Description (alt text), name: alt, widget: string, required: false }
+            widget: image
+            multiple: true
+            required: false
+            hint: "A hand-picked set of your best work, shown below the galleries. Select several at once, then drag to reorder."
 
       - name: contact
         label: About & Contact page
         file: src/content/contact/contact.json
-        media_folder: ../../assets/uploads
-        public_folder: ../../assets/uploads
         fields:
           - { label: Heading, name: heading, widget: string }
           - { label: Your photo, name: headshot, widget: image }

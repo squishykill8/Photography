@@ -1,5 +1,5 @@
 {
-  "bannerImage": "../../assets/uploads/sample-banner.jpg",
+  "bannerImage": "@uploads/sample-banner.jpg",
   "bannerAlt": "Sunset over layered mountain ridges",
   "headline": "Light, place & people",
   "subheadline": "Photography for the moments and spaces that matter.",
@@ -7,11 +7,11 @@
   "galleriesHeading": "Portfolio",
   "featuredHeading": "Selected Work",
   "featured": [
-    { "image": "../../assets/uploads/sample-landscape-1.jpg", "alt": "Mountain ridges at dusk" },
-    { "image": "../../assets/uploads/sample-wedding-2.jpg", "alt": "Wedding rings" },
-    { "image": "../../assets/uploads/sample-interior-1.jpg", "alt": "Sunlit living room" },
-    { "image": "../../assets/uploads/sample-portrait-2.jpg", "alt": "Studio portrait" },
-    { "image": "../../assets/uploads/sample-landscape-3.jpg", "alt": "Coastal hills" },
-    { "image": "../../assets/uploads/sample-wedding-4.jpg", "alt": "Reception details" }
+    "@uploads/sample-landscape-1.jpg",
+    "@uploads/sample-wedding-2.jpg",
+    "@uploads/sample-interior-1.jpg",
+    "@uploads/sample-portrait-2.jpg",
+    "@uploads/sample-landscape-3.jpg",
+    "@uploads/sample-wedding-4.jpg"
   ]
 }

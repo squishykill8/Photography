@@ -7,7 +7,6 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "cms": "decap-server",
     "placeholders": "node scripts/make-placeholders.mjs"
   },
   "dependencies": {
@@ -15,7 +14,6 @@
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "decap-server": "^3.11.6",
     "netlify-cli": "^27.20.1"
   }
 }

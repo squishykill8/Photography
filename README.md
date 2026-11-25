@@ -64,7 +64,8 @@ Go to **your-site.netlify.app/admin/**.
 
 | I want to… | Where |
 |---|---|
-| Add photos to a gallery or reorder them | **Galleries** → pick one → **Photos** → *Add photos*, then drag to reorder |
+| Add photos to a gallery or reorder them | **Galleries** → pick one → **Photos**: select or drag in many photos at once, then drag the handles to reorder |
+| Add a caption to one photo | Same gallery → **Photo descriptions & captions** → add an item and pick that photo |
 | Add a new category (e.g. "Events") | **Galleries** → **New Gallery**. It appears in the menu automatically |
 | Change the banner, headline, or featured photos | **Pages → Home page** |
 | Edit your bio, headshot, email, or form choices | **Pages → About & Contact page** |
@@ -94,9 +95,8 @@ Requires Node.js (`brew install node`).
 ```bash
 npm install
 npm run dev     # site at http://localhost:4321
-npm run cms     # in a second Terminal tab: lets the admin work locally
 ```
-Local admin: http://localhost:4321/admin/index.html. Changes are saved straight into the files here. Commit and push them to publish.
+Local admin: http://localhost:4321/admin/index.html → **Work with Local Repository**, then pick this folder (Chrome or Edge). Changes are saved straight into the files here. Commit and push them to publish.
 
 `npm run build` makes the production site in `dist/`.
 

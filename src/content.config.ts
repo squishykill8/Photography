@@ -3,7 +3,7 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 // Every collection here is edited through the admin panel (public/admin/config.yml).
-// Image paths are stored relative to each content file, so Astro can optimize them.
+// Photo paths look like "@uploads/name.jpg" (src/assets/uploads), so Astro can optimize them.
 
 const settings = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/settings' }),
@@ -32,9 +32,7 @@ const home = defineCollection({
       buttonText: z.string().optional(),
       galleriesHeading: z.string().default('Portfolio'),
       featuredHeading: z.string().default('Selected Work'),
-      featured: z
-        .array(z.object({ image: image(), alt: z.string().default('') }))
-        .default([]),
+      featured: z.array(image()).default([]),
     }),
 });
 
@@ -47,11 +45,14 @@ const galleries = defineCollection({
       showOnHome: z.boolean().default(true),
       cover: image(),
       coverAlt: z.string().default(''),
-      photos: z
+      // Photos in display order (picked and reordered together in the admin panel).
+      photos: z.array(image()).default([]),
+      // Optional descriptions and captions for individual photos.
+      photoDetails: z
         .array(
           z.object({
             image: image(),
-            alt: z.string().default(''),
+            alt: z.string().optional(),
             caption: z.string().optional(),
           }),
         )

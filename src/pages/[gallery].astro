@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import GalleryGrid from '../components/GalleryGrid.astro';
-import { getGalleries } from '../lib/content';
+import { getGalleries, withDetails } from '../lib/content';
 
 // One page per gallery file in src/content/galleries (e.g. /landscape, /wedding).
 export async function getStaticPaths() {
@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 const { g } = Astro.props;
 const { Content } = await render(g);
+const photos = withDetails(g.data.photos, g.data.photoDetails, `${g.data.title} photograph`);
 const plain = g.body?.replace(/\s+/g, ' ').trim().slice(0, 160);
 ---
 
@@ -23,8 +24,8 @@ const plain = g.body?.replace(/\s+/g, ' ').trim().slice(0, 160);
   </header>
   <section class="container gallery">
     {
-      g.data.photos.length ? (
-        <GalleryGrid photos={g.data.photos} id={g.id} />
+      photos.length ? (
+        <GalleryGrid photos={photos} id={g.id} />
       ) : (
         <p class="empty">Photos coming soon.</p>
       )
